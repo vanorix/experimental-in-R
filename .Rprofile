@@ -2,5 +2,5 @@
   library(devtools)
   library(mongolite)
   library(roxygen2)
-  load_all("~\\PUCMM\\Tema_especial\\proyecto\\database\\R")
+  load_all("~\\research\\R")
 }
