@@ -201,8 +201,36 @@ getLoteByExp <- function(sessionID){
 }
 
 #Returns all laminas capture in the specified capture point in diferent experimental sessions
-getLamByCapPoint <- function(){}
+#capPointID: Identifier of the capture point the laminas are asociated to.
+#Returned Values: laminaID, laminaCaptureMoment, laminaPrecipitacion, fechaCaptLamina
+getLamByCapPoint <- function(captPointID){
+  db = connect()
+  captPoint = '"puntoCaptID":'
+  query = paste('{', captPoint, captPointID, '}', sep = " ")
+  projection = '{"_id": 0, "laminaID": 1, "laminaCaptureMoment": 1, "laminaPrecipitacion": 1, "fechaCaptLamina": 1}'
+  return(db(query, projection))
+}
 
-#Returns all capture points within an specified hour-of-capture range
-getLamByCapHour <- function(){}
+#Returns all capture points within an specified hour-of-capture range from different experimental sessions
+#sh: Minimum value of the search range.
+#eh: Maximum value of the search range.
+#NOTE: The humidity range is inclusive. If any of the parameters ISN't
+#going to be used, specify it as NULL. Otherwise there'll be an
+#error.
+#Returned Values: laminaID, laminaCaptureMoment, laminaPrecipitacion, fechaCaptLamina
+getLamByCapHour <- function(sh, eh){
+  db = connect()
+  hour = '"laminaCaptureMoment":'
+  gte = '"$gte":'
+  lte = '"$lte":'
+  query = paste('{', hour, '{', gte, '"', sh, '"', ',', lte, '"', eh, '"', '}}',sep = "")
+  if(is.null(sh)){
+    query = paste('{', hour, '{', lte, '"', eh, '"', '}}',sep = "")
+  }
+  if(is.null(eh)){
+    query = paste('{', hour, '{', gte, '"', sh, '"', '}}',sep = "")
+  }
+  projection = '{"_id": 0, "laminaID": 1, "laminaCaptureMoment": 1, "laminaPrecipitacion": 1, "fechaCaptLamina": 1}'
+  return(db(query, projection))
+}
 
