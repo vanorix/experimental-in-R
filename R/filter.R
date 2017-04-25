@@ -1,10 +1,10 @@
-#Connects to the experimental collection in the research database
-#Return: A function to query from the connected collection
+#' Connects to the experimental collection in the research database
+#' @return A function to query from the connected collection
 connect <- function(){
   return(
-    #Lets you query the experimental collection from the research database
-    #q: Query string
-    #f: Fields wanted in the result from the query
+    #' Lets you query the experimental collection from the research database
+    #' @param q Query string
+    #' @param f Fields wanted in the result from the query
     function(q, f){
       con <- mongo(collection = "experimental", db = "research")
       res <- con$find(query = q, fields = f)
@@ -13,15 +13,15 @@ connect <- function(){
   )
 }
 
-#Connects to the specified collection in the specified database
-#from: (string) Database name
-#to: (string) Collection name, must exist in the database to be able to query it.
-#Return: A function to query from the connected collection
+#' Connects to the specified collection in the specified database
+#' @param from (string) Database name
+#' @param to (string) Collection name, must exist in the database to be able to query it.
+#' @return A function to query from the connected collection
 connectTo <- function(from, to){
   return(
-    #Lets you query the experimental collection from the research database
-    #q: Query string
-    #f: Fields wanted in the result from the query
+    #' Lets you query the experimental collection from the research database
+    #' @param q Query string
+    #' @param f Fields wanted in the result from the query
     function(q, f){
       con <- mongo(collection = to, db = from)
       res <- con$find(query = q, fields = f)
@@ -30,9 +30,9 @@ connectTo <- function(from, to){
   )
 }
 
-#Returns all experimental sessions related to the loteID provided
-#loteID: Identifier of the lote as specified in the CSV file.
-#values Returned: dataID, windDirection, windSpeed, temperature, humidity, startDate, endDate
+#' Returns all experimental sessions related to the loteID provided
+#' @param loteID Identifier of the lote as specified in the CSV file.
+#' @return values Returned: dataID, windDirection, windSpeed, temperature, humidity, startDate, endDate
 getSessionByLote <- function(loteID){
   db = connect()
   query = '{"loteID":'
@@ -41,13 +41,13 @@ getSessionByLote <- function(loteID){
   return(db(query, projection))
 }
 
-#Returns all experimental sessions within the date range provided
-#sd: Starting date of the search range.
-#ed: Ending date of the search range.
-#NOTE: The date range is inclusive. If any of the parameters ISN't
-#going to be used, specify it as NULL. Otherwise there'll be an
-#error.
-#values Returned: dataID, windDirection, windSpeed, temperature, humidity, startDate, endDate
+#' Returns all experimental sessions within the date range provided
+#' @param sd Starting date of the search range.
+#' @param ed Ending date of the search range.
+#' @note The date range is inclusive. If any of the parameters ISN't
+#' going to be used, specify it as NULL. Otherwise there'll be an
+#' error.
+#' @return Values Returned: dataID, windDirection, windSpeed, temperature, humidity, startDate, endDate
 getSessionByDate <- function(sd, ed){
   db = connect()
   startDate = '"startDate":{"$gte":'
@@ -63,9 +63,9 @@ getSessionByDate <- function(sd, ed){
   return(db(query, projection))
 }
 
-#Returns the experimental session asociated with the ID provided
-#sessionID: Identifier of the session as specified in the CSV as the dataID field
-#values Returned: dataID, windDirection, windSpeed, temperature, humidity, startDate, endDate
+#' Returns the experimental session asociated with the ID provided
+#' @param sessionID: Identifier of the session as specified in the CSV as the dataID field
+#' @return Values Returned: dataID, windDirection, windSpeed, temperature, humidity, startDate, endDate
 getSessionByID <- function(sessionID){
   db = connect()
   query = '{"dataID":'
@@ -74,13 +74,13 @@ getSessionByID <- function(sessionID){
   return(db(query, projection))
 }
 
-#Returns all experimental sessions within the temperature range specified
-#st: Minimum value of the search range.
-#et: Maximum value of the search range.
-#NOTE: The temperature range is inclusive. If any of the parameters ISN't
-#going to be used, specify it as NULL. Otherwise there'll be an
-#error.
-#values Returned: dataID, windDirection, windSpeed, temperature, humidity, startDate, endDate
+#' Returns all experimental sessions within the temperature range specified
+#' @param st Minimum value of the search range.
+#' @param et Maximum value of the search range.
+#' @note The temperature range is inclusive. If any of the parameters ISN't
+#' going to be used, specify it as NULL. Otherwise there'll be an
+#' error.
+#' @return Values Returned: dataID, windDirection, windSpeed, temperature, humidity, startDate, endDate
 getSessionByTemp <- function(st, et){
   db = connect()
   temp = '"temperature":'
@@ -97,13 +97,13 @@ getSessionByTemp <- function(st, et){
   return(db(query, projection))
 }
 
-#Returns all experimental sessions wihtin the humidity range specified
-#sh: Minimum value of the search range.
-#eh: Maximum value of the search range.
-#NOTE: The humidity range is inclusive. If any of the parameters ISN't
-#going to be used, specify it as NULL. Otherwise there'll be an
-#error.
-#values Returned: dataID, windDirection, windSpeed, temperature, humidity, startDate, endDate
+#' Returns all experimental sessions wihtin the humidity range specified
+#' @param sh Minimum value of the search range.
+#' @param eh Maximum value of the search range.
+#' @note The humidity range is inclusive. If any of the parameters ISN't
+#' going to be used, specify it as NULL. Otherwise there'll be an
+#' error.
+#' @return Values Returned: dataID, windDirection, windSpeed, temperature, humidity, startDate, endDate
 getSessionByHum <- function(sh, eh){
   db = connect()
   hum = '"humidity":'
@@ -120,9 +120,9 @@ getSessionByHum <- function(sh, eh){
   return(db(query, projection))
 }
 
-#Returns all the plantones asociated with the specified loteID
-#loteID: Identifier of the lote as specified in the CSV
-#Returned Values: plantonID, plantonLongitude, plantonLatitude, plantonBordeBit
+#' Returns all the plantones asociated with the specified loteID
+#' @param loteID Identifier of the lote as specified in the CSV
+#' @return Returned Values: plantonID, plantonLongitude, plantonLatitude, plantonBordeBit
 getPlantByLote <- function(loteID){
   db = connect()
   query = '{"loteID":'
@@ -131,10 +131,10 @@ getPlantByLote <- function(loteID){
   return(db(query, projection))
 }
 
-#Returns all the capture points asociated with the loteID and plantonID specified
-#loteID: Identifier of the lote as specified in the CSV
-#platonID: Identifier of the planton asociated to the loteID
-#Returned Values: puntoCaptID, puntoCaptLatitud, puntoCaptLongitud, puntoCaptAlturaSurco, puntoCaptAmplitudSurco, puntoCaptRadioEfectivo
+#' Returns all the capture points asociated with the loteID and plantonID specified
+#' @param loteID Identifier of the lote as specified in the CSV
+#' @param platonID Identifier of the planton asociated to the loteID
+#' @return Returned Values: puntoCaptID, puntoCaptLatitud, puntoCaptLongitud, puntoCaptAlturaSurco, puntoCaptAmplitudSurco, puntoCaptRadioEfectivo
 getPlantCapPoint <- function(loteID, plantonID){
   db = connect()
   lote = '"loteID":'
@@ -144,9 +144,9 @@ getPlantCapPoint <- function(loteID, plantonID){
   return(db(query, projection))
 }
 
-#Returns all capture points within the specifed lote
-#loteID: Identifier of the lote as specified in the CSV
-#Returned Values: puntoCaptID, puntoCaptLatitud, puntoCaptLongitud, puntoCaptAlturaSurco, puntoCaptAmplitudSurco, puntoCaptRadioEfectivo
+#' Returns all capture points within the specifed lote
+#' @param loteID Identifier of the lote as specified in the CSV
+#' @return Returned Values: puntoCaptID, puntoCaptLatitud, puntoCaptLongitud, puntoCaptAlturaSurco, puntoCaptAmplitudSurco, puntoCaptRadioEfectivo
 getCapPointByLote <- function(loteID){
   db = connect()
   lote = '"loteID":'
@@ -155,9 +155,9 @@ getCapPointByLote <- function(loteID){
   return(db(query, projection))
 }
 
-#Returns all capture points asociated with the specifed sessionID
-#sessionID: Identifier of the session as specified in the CSV as the dataID field
-#Returned Values: puntoCaptID, puntoCaptLatitud, puntoCaptLongitud, puntoCaptAlturaSurco, puntoCaptAmplitudSurco, puntoCaptRadioEfectivo
+#' Returns all capture points asociated with the specifed sessionID
+#' @param sessionID Identifier of the session as specified in the CSV as the dataID field
+#' @return Returned Values: puntoCaptID, puntoCaptLatitud, puntoCaptLongitud, puntoCaptAlturaSurco, puntoCaptAmplitudSurco, puntoCaptRadioEfectivo
 getCapPointByExp <- function(sessionID){
   db = connect()
   session = '"dataID":'
@@ -166,13 +166,13 @@ getCapPointByExp <- function(sessionID){
   return(db(query, projection))
 }
 
-#Returns all lotes within the specifed plantation date range
-#sd: Starting date of the search range.
-#ed: Ending date of the search range.
-#NOTE: The date range is inclusive. If any of the parameters ISN't
-#going to be used, specify it as NULL. Otherwise there'll be an
-#error.
-#values Returned: loteID, lotePlantationDate, loteLatitude, loteLongitude
+#' Returns all lotes within the specifed plantation date range
+#' @param sd Starting date of the search range.
+#' @param ed Ending date of the search range.
+#' @note The date range is inclusive. If any of the parameters ISN't
+#' going to be used, specify it as NULL. Otherwise there'll be an
+#' error.
+#' @return values Returned: loteID, lotePlantationDate, loteLatitude, loteLongitude
 getLoteByDate <- function(sd, ed){
   db = connect()
   term = '"lotePlantationDate":'
@@ -189,9 +189,9 @@ getLoteByDate <- function(sd, ed){
   return(db(query, projection))
 }
 
-#Returns the specific lotes asociated with the specifed sessionID
-#sessionID: Identifier of the session as specified in the CSV as the dataID field
-#values Returned: loteID, lotePlantationDate, loteLatitude, loteLongitude
+#' Returns the specific lotes asociated with the specifed sessionID
+#' @param sessionID Identifier of the session as specified in the CSV as the dataID field
+#' @return Values Returned: loteID, lotePlantationDate, loteLatitude, loteLongitude
 getLoteByExp <- function(sessionID){
   db = connect()
   session = '"dataID":'
@@ -200,9 +200,9 @@ getLoteByExp <- function(sessionID){
   return(db(query, projection))
 }
 
-#Returns all laminas capture in the specified capture point in diferent experimental sessions
-#capPointID: Identifier of the capture point the laminas are asociated to.
-#Returned Values: laminaID, laminaCaptureMoment, laminaPrecipitacion, fechaCaptLamina
+#' Returns all laminas capture in the specified capture point in diferent experimental sessions
+#' @param capPointID Identifier of the capture point the laminas are asociated to.
+#' @return Returned Values: laminaID, laminaCaptureMoment, laminaPrecipitacion, fechaCaptLamina
 getLamByCapPoint <- function(captPointID){
   db = connect()
   captPoint = '"puntoCaptID":'
@@ -211,13 +211,13 @@ getLamByCapPoint <- function(captPointID){
   return(db(query, projection))
 }
 
-#Returns all capture points within an specified hour-of-capture range from different experimental sessions
-#sh: Minimum value of the search range.
-#eh: Maximum value of the search range.
-#NOTE: The humidity range is inclusive. If any of the parameters ISN't
-#going to be used, specify it as NULL. Otherwise there'll be an
-#error.
-#Returned Values: laminaID, laminaCaptureMoment, laminaPrecipitacion, fechaCaptLamina
+#' Returns all capture points within an specified hour-of-capture range from different experimental sessions
+#' @param sh Minimum value of the search range.
+#' @param eh Maximum value of the search range.
+#' @note The humidity range is inclusive. If any of the parameters ISN't
+#' going to be used, specify it as NULL. Otherwise there'll be an
+#' error.
+#' @return Returned Values: laminaID, laminaCaptureMoment, laminaPrecipitacion, fechaCaptLamina
 getLamByCapHour <- function(sh, eh){
   db = connect()
   hour = '"laminaCaptureMoment":'
