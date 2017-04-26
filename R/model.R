@@ -58,7 +58,7 @@ optimizeQ <- function(Aef, Aint, hm, hd){
       est <- model(df, Aef, Aint, hm, hd)
       plot(x= res, main="Solución de la ecuación", xlab = 't', ylab = 'y', type= "l")
 
-      plot(df[,'Tiempo'],type="l",col="red",xlab='Tiempo',ylab='Qd(t)')
+      plot(df[,'Descarga'],type="l",col="red",xlab='Tiempo',ylab='Qd(t)')
       lines(df[,'Tiempo'],est[,'Qd(t)'],col="green")
       legend("topleft", c("Observada", "Estimada"), lty=c(1,1), lwd=c(1.5,1.5), col=c('red','green'))
 
