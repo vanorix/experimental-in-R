@@ -18,7 +18,7 @@ Returned Values: laminaID, laminaCaptureMoment, laminaPrecipitacion, fechaCaptLa
 Returns all capture points within an specified hour-of-capture range from different experimental sessions
 }
 \note{
-The humidity range is inclusive. If any of the parameters ISN't
+The hour range is inclusive. If any of the parameters ISN't
 going to be used, specify it as NULL. Otherwise there'll be an
 error.
 }

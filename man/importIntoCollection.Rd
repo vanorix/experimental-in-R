@@ -2,7 +2,7 @@
 % Please edit documentation in R/import.R
 \name{importIntoCollection}
 \alias{importIntoCollection}
-\title{Import a dataset into an specefic collection}
+\title{Import a dataset into an specific collection}
 \usage{
 importIntoCollection(colname, filepath)
 }
@@ -12,5 +12,5 @@ importIntoCollection(colname, filepath)
 \item{filepath}{Absolute path of the CSV file containing the data}
 }
 \description{
-Import a dataset into an specefic collection
+Import a dataset into an specific collection
 }

@@ -7,7 +7,7 @@
 getSessionByID(sessionID)
 }
 \arguments{
-\item{sessionID:}{Identifier of the session as specified in the CSV as the dataID field}
+\item{sessionID}{Identifier of the session as specified in the CSV as the dataID field}
 }
 \value{
 Values Returned: dataID, windDirection, windSpeed, temperature, humidity, startDate, endDate
