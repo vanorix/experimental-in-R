@@ -1,5 +1,3 @@
-#library(mongolite)
-
 #' Imports from a CSV file to the mongo database.
 #'
 #' @param filepath Absolute path of for the CSV file containing the data to be inserted
@@ -12,7 +10,7 @@ importIntoDatabase <- function(filepath){
   con$insert(file)
 }
 
-#' Import a dataset into an specefic collection
+#' Import a dataset into an specific collection
 #' @param colname Name of the collection
 #' @param filepath Absolute path of the CSV file containing the data
 importIntoCollection <- function(colname, filepath){

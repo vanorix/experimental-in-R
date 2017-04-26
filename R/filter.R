@@ -64,7 +64,7 @@ getSessionByDate <- function(sd, ed){
 }
 
 #' Returns the experimental session asociated with the ID provided
-#' @param sessionID: Identifier of the session as specified in the CSV as the dataID field
+#' @param sessionID Identifier of the session as specified in the CSV as the dataID field
 #' @return Values Returned: dataID, windDirection, windSpeed, temperature, humidity, startDate, endDate
 getSessionByID <- function(sessionID){
   db = connect()
@@ -214,7 +214,7 @@ getLamByCapPoint <- function(captPointID){
 #' Returns all capture points within an specified hour-of-capture range from different experimental sessions
 #' @param sh Minimum value of the search range.
 #' @param eh Maximum value of the search range.
-#' @note The humidity range is inclusive. If any of the parameters ISN't
+#' @note The hour range is inclusive. If any of the parameters ISN't
 #' going to be used, specify it as NULL. Otherwise there'll be an
 #' error.
 #' @return Returned Values: laminaID, laminaCaptureMoment, laminaPrecipitacion, fechaCaptLamina
